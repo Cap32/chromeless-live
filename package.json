@@ -7,6 +7,10 @@
     "*.md",
     "lib"
   ],
+  "bin": {
+    "chromeless-live": "bin/chromeless-live",
+    "chromelive": "bin/chromeless-live"
+  },
   "scripts": {
     "start": "cross-env CHROMELESS_LIVE_ENV=development bin/chromeless-live",
     "prebuild": "rimraf lib",
@@ -21,8 +25,9 @@
   "keywords": [],
   "licenses": "MIT",
   "dependencies": {
+    "chrome-launcher": "^0.4.0",
     "chromeless": "^1.2.0",
-    "log-update": "^2.1.0",
+    "ink": "^0.3.1",
     "term-img": "^2.1.0",
     "yargs": "^8.0.2"
   },
@@ -35,6 +40,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
     "babel-plugin-transform-es2015-parameters": "^6.18.0",
     "babel-plugin-transform-es2015-spread": "^6.22.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-polyfill": "^6.13.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.11.6",
@@ -45,6 +51,7 @@
     "eslint-plugin-jest": "^19.0.1",
     "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.1.0",
     "eslint-plugin-standard": "^3.0.1",
     "jest": "^20.0.4",
     "rimraf": "^2.5.4"

@@ -1,13 +1,15 @@
 {
     "parser": "babel-eslint",
     "plugins": [
+      "react",
       "jest",
     ],
     "extends": [
         "standard",
-        "plugin:promise/recommended",
         "plugin:import/recommended",
         "plugin:jest/recommended",
+        "plugin:promise/recommended",
+        "plugin:react/recommended",
     ],
     "env": {
         "browser": true,
@@ -57,5 +59,10 @@
     },
     "globals": {
         "__DEV__": true,
+    },
+    "settings": {
+        "react": {
+            "pragma": "h",
+        },
     },
 }
