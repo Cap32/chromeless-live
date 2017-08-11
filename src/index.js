@@ -29,6 +29,47 @@ const {
 	height = 480,
 } = argv;
 
+const startLive = (chromeless) => {
+	return new Promise((resolve) => {
+		class App extends Component {
+			state = {
+				data: '',
+			};
+
+			async componentDidMount() {
+
+				const loop = async () => {
+					try {
+						const screenshotFile = await chromeless.screenshot();
+						this.setState({
+							data: termImg.string(screenshotFile, {
+								width: `${width}px`,
+								height: `${height}px`,
+								preserveAspectRatio: false,
+							}),
+						});
+					}
+					catch (err) {}
+
+					setTimeout(loop, 1000 / 60);
+				};
+				loop();
+
+				resolve();
+			}
+
+			render() {
+				const { data } = this.state;
+				return (
+					<div>{data}</div>
+				);
+			}
+		}
+
+		render(<App />);
+	});
+};
+
 async function run() {
 
 	await chromeLaunch({
@@ -44,48 +85,14 @@ async function run() {
 		viewport: { width, height },
 	});
 
-	chromeless.goto(url);
+	await chromeless.goto(url);
 
 	const stop = async () => {
 		try { await chromeless.end(); }
 		catch (err) {}
 	};
 
-
-	class App extends Component {
-		state = {
-			data: '',
-		};
-
-		async componentDidMount() {
-
-			const loop = async () => {
-				try {
-					const screenshotFile = await chromeless.screenshot();
-					this.setState({
-						data: termImg.string(screenshotFile, {
-							width: `${width}px`,
-							height: `${height}px`,
-							preserveAspectRatio: false,
-						}),
-					});
-				}
-				catch (err) {}
-
-				setTimeout(loop, 1000 / 60);
-			};
-			loop();
-		}
-
-		render() {
-			const { data } = this.state;
-			return (
-				<div>{data}</div>
-			);
-		}
-	}
-
-	render(<App />);
+	await startLive(chromeless);
 
 	process.on('SIGINT', stop);
 	process.on('SIGTERM', stop);
